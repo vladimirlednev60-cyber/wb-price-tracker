@@ -58,14 +58,6 @@ def init_db():
     conn.commit()
     conn.close()
 
-def upgrade_database():
-    conn = get_db_connection()
-    c = conn.cursor()
-    # Обновляем тип поля check_interval с INTEGER на BIGINT
-    c.execute('ALTER TABLE user_settings ALTER COLUMN check_interval TYPE BIGINT')
-    conn.commit()
-    conn.close()
-    
 # Получение соединения с базой данных
 def get_db_connection():
     DATABASE_URL = os.getenv("DATABASE_URL")
@@ -490,7 +482,6 @@ def main():
 
     # Создаём базу данных
     init_db()
-    upgrade_database() 
 
     app = Application.builder().token(TOKEN).build()
 
@@ -508,4 +499,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
